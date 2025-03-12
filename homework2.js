@@ -47,7 +47,7 @@ function checkID () {
     try {
         const id = prompt( 'Please, Enter your ID: ' );
         const idNum = parseFloat( id );
-        if ( idNum == 'NaN' ) {
+        if ( isNaN( idNum ) ) {
             alert( `${ id } is not a number! Please enter your ID` );
             throw new Error( `${ id } is not a number! Please enter your ID` );
         } else if ( id.length == 0 ) {
