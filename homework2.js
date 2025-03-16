@@ -7,6 +7,8 @@ function processData ( num1 = 0, num2 = 0, action = 'sum' ) {
         result = num1 * num2;
     } else if ( action == 'square' ) {
         result = num1 ** num2;
+    } else {
+        result = 'Incorect action!';
     }
     return result;
 
@@ -26,21 +28,26 @@ console.log( findElem( arr, "Alex" ) ); // true
 //Task_3:
 function deleteItem ( arr, item ) {
     const indexOfItem = arr.indexOf( item );
-    arr.splice( indexOfItem, 1 );
+    if ( arr.indexOf( item ) !== -1 ) {
+        arr.splice( indexOfItem, 1 );
+    }
     return arr;
 }
-console.log( deleteItem( [ 3, 12, 16, 19, 21, 33 ], 16 ) );
+console.log( deleteItem( [ 3, 12, 16, 19, 21, 33 ], 17 ) );
 
 //Task_4:
 function getCircleLength ( r ) {
-    const circleLength = 2 * 3.14 * r;
+    const circleLength = 2 * Math.PI * r;
     if ( typeof ( r ) != 'number' || r <= 0 ) {
         throw new Error( 'Incorrect radius - please, enter a positive numeric value!' );
     }
     return circleLength;
 }
-
-console.log( getCircleLength( 'five' ) );
+try {
+    console.log( getCircleLength( 'five' ) );
+} catch ( error ) {
+    console.error( error.message );
+}
 
 //Task_5:
 function checkID () {
@@ -58,30 +65,16 @@ function checkID () {
             throw new Error( `${ idNum } is invalid! Please enter your ID` );
         }
         alert( `Thank you! Your ID (${ id }) is valid.` );
-        return idNum;
     } catch ( error ) {
-        console.log( error.name );
-        console.log( error.message );
+        console.error( error.name );
+        console.error( error.message );
     }
 }
 
 //Task_6:
 function findArrDiff ( arr1, arr2 ) {
-    const differenceArr = [];
-    for ( let el of arr1 ) {
-        if ( arr2.includes( el ) ) {
-            continue;
-        } else {
-            differenceArr.push( el );
-        }
-    }
-    for ( let el of arr2 ) {
-        if ( arr1.includes( el ) ) {
-            continue;
-        } else {
-            differenceArr.push( el );
-        }
-    }
-    return differenceArr;
+    const uniqueArr1 = arr1.filter( ( el ) => arr2.indexOf( el ) == -1 );
+    const uniqueArr2 = arr2.filter( ( el ) => arr1.indexOf( el ) == -1 );
+    return uniqueArr1.concat( uniqueArr2 );
 }
 console.log( findArrDiff( [ 5, 10, 20 ], [ 0, 10, 20, 30 ] ) ); // ["5", "0", "30"]
