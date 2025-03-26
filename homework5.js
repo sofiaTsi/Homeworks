@@ -16,11 +16,11 @@ const user = {
 function gettUserInfo ( obj ) {
 	const { firstName, lastName, contact: { email, phone }, address: { city } } = obj;
 	const result = {
-		firstName: firstName,
-		lastName: lastName,
-		email: email,
-		phone: phone,
-		city: city
+		firstName,
+		lastName,
+		email,
+		phone,
+		city
 	};
 	return result;
 }
