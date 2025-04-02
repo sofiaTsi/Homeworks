@@ -1,7 +1,7 @@
 //Task_1:
-const http = require( 'http' );
+/* const http = require( 'http' );
 http.createServer( function ( request, response ) {
-    if ( request.url == '/' ) {
+    if ( request.url === '/' ) {
         response.writeHead( 200, { 'Content-Type': 'text/html' } );
         response.end( '<h1>Welcome to the new Server!</h1>' );
     } else if ( request.url == '/about' ) {
@@ -16,19 +16,26 @@ http.createServer( function ( request, response ) {
     }
 } ).listen( 8000 );
 
-console.log( 'http://127.0.0.1:8000/' );
+console.log( 'http://127.0.0.1:8000/' ); */
 
 
 //Task_2:
 const http = require( 'http' );
+const url = require( 'url' );
 const fs = require( 'fs' );
+const path = require( 'path' );
 
 http.createServer( function ( request, response ) {
-    let fileName = request.url.split( '=' );
-    if ( fileName[ 0 ] == '/file?name' ) {
-        fs.readFile( fileName[ 1 ], 'utf8', ( error, data ) => {
+    const parsedUrl = url.parse( request.url, true );
+    console.log( parsedUrl );
+    const pathName = parsedUrl.pathname;
+
+    if ( parsedUrl.query.name && pathName === '/file' ) {
+        const fileName = parsedUrl.query.name; //'data.txt'
+        const filePath = path.join( __dirname, fileName );
+        console.log( 'FilePath: ', filePath );
+        fs.readFile( filePath, 'utf-8', ( error, data ) => {
             if ( error ) {
-                console.log( new Error() );
                 response.writeHead( 404, { 'Content-Type': 'text/html' } );
                 response.end( '<h1>File not Found!<h1>' );
             } else {
@@ -40,6 +47,8 @@ http.createServer( function ( request, response ) {
         response.writeHead( 404, { 'Content-Type': 'text/html' } );
         response.end( '<h1>Invalid route!</h1>' );
     }
-} ).listen( 5000 );
 
-console.log( 'http://127.0.0.1:5000/' );
+} );
+server.listen( 5000, () => {
+    console.log( 'http:;//127.0.0.1:5000/' );
+} );

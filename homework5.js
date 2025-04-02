@@ -15,46 +15,53 @@ const user = {
 
 function gettUserInfo ( obj ) {
 	const { firstName, lastName, contact: { email, phone }, address: { city } } = obj;
-	const result = {
+	return {
 		firstName,
 		lastName,
 		email,
 		phone,
 		city
 	};
-	return result;
 }
 console.log( gettUserInfo( user ) );
 
 
 //Task_2:
 function countCars ( cars ) {
-	const carMap = new Map( [] );
-	for ( let car of cars ) {
-		let carAmount = carMap.get( car );
-		if ( carAmount == undefined ) {
-			carMap.set( car, 1 );
+	const carsMap = new Map();
+	for ( const car of cars ) {
+		let carsAmount = carsMap.get( car );
+		if ( carsAmount == undefined ) {
+			carsMap.set( car, 1 );
 			continue;
 		} else {
-			carAmount++;
-			carMap.set( car, carAmount );
+			carsAmount++;
+			carsMap.set( car, carsAmount );
 		}
 	}
-	return carMap;
+	return carsMap;
 }
 const cars = [ "BMW", "Opel", "Audi", "VW", "Toyota", "BMW", "VW", "Nissan", "BMW" ];
 console.log( countCars( cars ) );
+
+//Task_2_Option_2:
+/* function countCars ( cars ) {
+	const carsMap = new Map();
+	cars.forEach((car) => {
+		carsMap.set(car, cars.filter((c) => c == car).length)
+	});
+	return carsMap;
+} */
 
 
 //Task_3:
 function checkLogin ( username, password ) {
 	return new Promise( function ( resolve, reject ) {
 		setTimeout( function () {
-			if ( username == 'admin' && password == 'qwerty123456' ) {
+			if ( username === 'admin' && password === 'qwerty123456' ) {
 				resolve( `Welcome, ${ username }!` );
 			} else {
-				const reason = new Error( 'Invalid username or password!' );
-				reject( reason );
+				reject( 'Invalid username or password!' );
 			}
 		}, 2000 );
 	} );
@@ -85,10 +92,10 @@ async function fetchUserPosts ( userId ) {
 }
 
 function loadUserProfile ( userId ) {
-	return new Promise( async function ( resolve, reject ) {
+	return new Promise( function ( resolve, reject ) {
 		const data = {
-			profile: await fetchUserProfile( userId ),
-			posts: await fetchUserPosts( userId )
+			profile: fetchUserProfile( userId ),
+			posts: fetchUserPosts( userId )
 		};
 		resolve( data );
 		const reason = new Error( 'Error loading user data' );
@@ -100,6 +107,19 @@ loadUserProfile( 1 )
 	.then( ( data ) => console.log( data ) )
 	.catch( ( error ) => console.log( error ) );
 
+//Task_4_Option_2:
+/* async function loadUserProfile ( userId ) {
+	try{
+		const profile = await fetchUserProfile( userId ),
+		const posts = await fetchUserProfile( userId ),
+		return {profile, posts}
+	} catch(error){
+		return 'Error loading user data'
+	}
+}
+loadUserProfile( 1 )
+	.then( ( data ) => console.log( data ) )
+	.catch( ( error ) => console.log( error ) ); */
 
 //Task_5:
 const cart = [
@@ -125,3 +145,15 @@ function updateCart ( cart, newItem ) {
 
 console.log( updateCart( cart, { id: 2, name: "Smartphone", price: 800, quantity: 1 } ) );
 console.log( updateCart( cart, { id: 3, name: "Tablet", price: 600, quantity: 1 } ) );
+
+//Task_5_Option_2:
+/* function updateCart ( cart, newItem ) {
+	const updatedCart = [...cart]
+	const itemIndex = updatedCart.findIndex( ( item ) => item.id === newItem.id)
+	if ( itemIndex !== -1){
+		updatedCart[ itemIndex ].quantity += newItem.quantity
+	} else{
+		updatedCart.push( newItem )
+	}
+	return updatedCart;
+} */
