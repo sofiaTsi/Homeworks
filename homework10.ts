@@ -43,7 +43,7 @@ console.log( identity( [ { title: "Encounter", rating: 3 }, { title: "Dead to me
 
 
 //Task_3:
-function WithEmploymentDate<T extends { new( ...args: any[] ): {}; }> ( constructor: T ) {
+/* function WithEmploymentDate<T extends { new( ...args: any[] ): {}; }> ( constructor: T ) {
     return class extends constructor {
         employmentDate = new Date( "2024-04-12" );
     };
@@ -61,7 +61,7 @@ class Manager {
 }
 
 const manager = new Manager();
-console.log( manager );
+console.log( manager ); */
 
 // Output
 //{ "task": "Simple task", "project": "Simple project", "employmentDate": "2024-04-12T00:00:00.000Z"; }
