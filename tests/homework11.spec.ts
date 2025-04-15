@@ -48,5 +48,4 @@ test.describe( 'test suit for Homework 11', () => {
         expect( page.url() ).toContain( '/docs' );
 
     } );
-} )
-
+} );
